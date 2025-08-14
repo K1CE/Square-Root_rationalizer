@@ -19,17 +19,27 @@ user_goal = 1
 print("\n...")
 
 
+def is_number_tryexcept(s):
+    """ Returns True if string is a number. """
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+
 try:
     user_radicand = float(user_radicand)
 except ValueError:
     print(f"'√{user_radicand}' is not a valid number.")
 
-if not user_limit.isnumeric():
+if not is_number_tryexcept(user_limit):
     user_limit = 20
 user_limit = float(user_limit)
 
-if not user_increment.isnumeric():
+if not is_number_tryexcept(user_increment):
     user_increment = 1
+    print("no increment inputted")
 user_increment = float(user_increment)
     
 user_goal = float(user_increment)
@@ -88,4 +98,3 @@ for i in range(iterations):
 print("\r 100% complete")
     #time.sleep(1)
 #print(f"entered: {user_radicand}")
-
