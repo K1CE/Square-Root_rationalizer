@@ -89,5 +89,17 @@ for i in range(iterations):
     print(f"{int(i/iterations * 100)}% complete", end="")
     
 print("\r          100% complete")
+
+
+print("______________________________________________________\n")
+
+print(f"\n the closest multiplier that approaches an integer is: \n     >>{multiplier_to_int} * √{user_radicand}<<\n approximating: {closest_int}\n with a distance of {closest_to_int}")
+if(using_goal):
+    print(f"\n the closest multiplier that approaches a multiple of {user_goal} is: \n     >>{multiplier_to_goal}<<\n approximating: {closest_increment}\n with a distance of {closest_to_increment}")
+
+print("\n\n(end)\n\n")
+
+
+
     #time.sleep(1)
 #print(f"entered: {user_radicand}")
