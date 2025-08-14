@@ -82,7 +82,7 @@ for i in range(iterations):
         current_distance = (user_goal - result) % user_goal
         if current_distance < closest_to_increment:
             closest_to_increment = current_distance
-            closest_increment = (user_goal - result) % user_goal
+            closest_increment = result + (user_goal - result) % user_goal
             multiplier_to_goal = multiplier
             print(f"multiplier {multiplier} with distance {current_distance} to goal {closest_increment}")
 
