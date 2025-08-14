@@ -88,6 +88,6 @@ for i in range(iterations):
 
     print(f"{int(i/iterations * 100)}% complete", end="")
     
-print("\r 100% complete")
+print("\r          100% complete")
     #time.sleep(1)
 #print(f"entered: {user_radicand}")
