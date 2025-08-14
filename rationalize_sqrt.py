@@ -4,6 +4,7 @@ TODO
 - add processing time test
 - add binary stability test
 - add target point option
+- use functions
 
 '''
 print("\n\n===== sqrt rationalizer ========\n     leave blank for default\n     This program is designed to find the multiple of a square root which creates the closest result to a whole number\n     The original purpose of this was to find side lengths of right triangles and other geometric shapes which approximate to workable lengths.\n     √2 or √3 is the usual problem number\n\n")
@@ -44,10 +45,12 @@ multiplier_to_goal = 0
 
 current_distance = -1
 
+print("\n")
+
 for i in range(iterations):
     multiplier = user_increment * (i + 1)
     result = multiplier * ( (user_radicand) ** (1/user_root_index) )
-    
+    print("\r           ", end = "")
     
     current_distance =  result % 1
     if current_distance < closest_to_int:
@@ -63,21 +66,24 @@ for i in range(iterations):
         multiplier_to_int = multiplier
         print(f"multiplier {multiplier} with distance {current_distance} to integer {closest_int}")
         
-    if user_goal == int(user_goal):
-        continue
-    current_distance = result % user_goal
-    if current_distance < closest_to_increment:
-        closest_to_increment = current_distance
-        closest_increment = result - result % user_goal
-        multiplier_to_goal = multiplier
-        print(f"multiplier {multiplier} with distance {current_distance} to goal {closest_increment}")
-        
-    current_distance = (user_goal - result) % user_goal
-    if current_distance < closest_to_increment:
-        closest_to_increment = current_distance
-        closest_increment = (user_goal - result) % user_goal
-        multiplier_to_goal = multiplier
-        print(f"multiplier {multiplier} with distance {current_distance} to goal {closest_increment}")
+    if user_goal != int(user_goal):
+        current_distance = result % user_goal
+        if current_distance < closest_to_increment:
+            closest_to_increment = current_distance
+            closest_increment = result - result % user_goal
+            multiplier_to_goal = multiplier
+            print(f"multiplier {multiplier} with distance {current_distance} to goal {closest_increment}")
+            
+        current_distance = (user_goal - result) % user_goal
+        if current_distance < closest_to_increment:
+            closest_to_increment = current_distance
+            closest_increment = (user_goal - result) % user_goal
+            multiplier_to_goal = multiplier
+            print(f"multiplier {multiplier} with distance {current_distance} to goal {closest_increment}")
 
+    print(f"{int(i/iterations * 100)}% complete", end="")
+    
+print("\r 100% complete")
+    #time.sleep(1)
 #print(f"entered: {user_radicand}")
 
