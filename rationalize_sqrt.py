@@ -26,9 +26,11 @@ except ValueError:
 
 if not user_limit.isnumeric():
     user_limit = 20
+user_limit = float(user_limit)
 
 if not user_increment.isnumeric():
     user_increment = 1
+user_increment = float(user_increment)
     
 user_goal = float(user_increment)
     
