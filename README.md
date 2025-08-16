@@ -1,4 +1,4 @@
-<p align="center"><img width="546" height="100" src="https://github.com/user-attachments/assets/3153b433-755d-43ff-84eb-045b6e62a907" alt="Logo Laravel Boost"></p>
+<p align="center"><img width="462" height="100" src="https://github.com/user-attachments/assets/1c3ab3bb-cb59-48ff-8c06-b01d2a2a24a2" alt="Logo Laravel Boost"></p>
 
 # △
   This project is intended to be used as a simple calculator for bruteforcing and displaying different variations of irrational square-roots. 
