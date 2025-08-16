@@ -3,6 +3,7 @@ print("\n\n===== sqrt rationalizer ========\n     leave blank for default\n     
 user_radicand = input(">enter radicand: √")
 user_limit = input(">enter upper limit (default is 20): ") 
 user_increment = input(">enter allowed increment (default is 1): ")
+user_goal = input(">enter goal multiple (default is set to increment): ")
 user_root_index = 2 #TODO: add options for higher order roots
 user_goal = 1
 
@@ -33,8 +34,10 @@ if not is_number_tryexcept(user_increment):
     user_increment = 1
     print("no increment inputted")
 user_increment = float(user_increment)
-    
-user_goal = float(user_increment)
+
+if not is_number_tryexcept(user_limit):
+    user_goal = float(user_increment)
+user_goal = float(user_goal)
     
 iterations = int(user_limit / user_increment)
 closest_to_int = 10000
