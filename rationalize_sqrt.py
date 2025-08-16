@@ -5,7 +5,6 @@ user_limit = input(">enter upper limit (default is 20): ")
 user_increment = input(">enter allowed increment (default is 1): ")
 user_goal = input(">enter goal multiple (default is set to increment): ")
 user_root_index = 2 #TODO: add options for higher order roots
-user_goal = 1
 
 #goal_precision = len(user_increment[user_increment.find("."):])
 
@@ -32,10 +31,9 @@ user_limit = float(user_limit)
 
 if not is_number_tryexcept(user_increment):
     user_increment = 1
-    print("no increment inputted")
 user_increment = float(user_increment)
 
-if not is_number_tryexcept(user_limit):
+if not is_number_tryexcept(user_goal):
     user_goal = float(user_increment)
 user_goal = float(user_goal)
     
@@ -51,7 +49,7 @@ multiplier_to_goal = 0
 
 
 current_distance = -1
-using_goal = user_goal != int(user_goal)
+using_goal = user_goal != 1
 
 print("\n")
 
