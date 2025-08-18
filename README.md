@@ -6,6 +6,10 @@
   side lengths of my hexagon's broken down model. When splayed out into triangles and squares each side length could be approximately represented
   in whole numbers. 
 
+<img width="300" height="300" alt="reasexample" src="https://github.com/user-attachments/assets/c49c86e3-8bbc-4029-8a7b-e3e87ca28e8a" />       |  <img width="793" height="300" alt="image" src="https://github.com/user-attachments/assets/f538403e-96d3-43c9-9081-020b89cf1f37" />
+:-------------------------:|:-------------------------:
+Example from game: Reassembly <br/> Unable to connect the two parts on the right together; the structure loses overall stability | Example from Roblox studio: making a hexagon with walls results in stubborn seams which can be mitigated by choosing a better scale
+
   Although it's useful for design work where exact precision isn't necessary, this may not be the solution if you're looking for triangles with actual
   whole numbers.
 
