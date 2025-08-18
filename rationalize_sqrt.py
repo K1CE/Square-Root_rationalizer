@@ -91,8 +91,9 @@ for i in range(iterations):
     
 print("\r          100% complete")
 
-
-print("______________________________________________________\n")
+#fun printHorizontalDivider(dOm: Dom) = { val drawChar = '&U+2014;' arrayOf(dOm.documentWidth, drawChar) }
+#print("\n")
+print(u'\u2500' * 100)
 
 print(f"\n the closest multiplier that approaches an integer is: \n     >>{multiplier_to_int} * √{user_radicand}<<\n approximating: {closest_int}\n with a distance of {closest_to_int}")
 if(using_goal):
