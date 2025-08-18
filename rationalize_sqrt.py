@@ -1,15 +1,4 @@
 
-print("\n\n===== sqrt rationalizer ========\n     leave blank for default\n     This program is designed to find the multiples of a square root which create the closest result to a whole number\n     The original purpose of this was to find side lengths of right triangles and other geometric shapes which approximate to workable lengths.\n     √2 or √3 is the usual problem number\n\n")
-user_radicand = input(">enter radicand: √")
-user_limit = input(">enter upper limit (default is 20): ") 
-user_increment = input(">enter allowed increment (default is 1): ")
-user_goal = input(">enter goal multiple (default is set to increment): ")
-user_root_index = 2 #TODO: add options for higher order roots
-
-#goal_precision = len(user_increment[user_increment.find("."):])
-
-print("\n...")
-
 
 def is_number_tryexcept(s):
     """ Returns True if string is a number. """
@@ -19,6 +8,24 @@ def is_number_tryexcept(s):
     except ValueError:
         return False
 
+
+
+
+print("\n\n======== sqrt rationalizer ========")
+print("     leave blank for default") 
+print("     This program is designed to find the multiples of a square root which create the closest result to a whole number")
+print("     The original purpose of this was to find side lengths of right triangles and other geometric shapes which approximate to workable lengths.")
+print("     √2 or √3 is the usual problem number\n\n")
+
+user_radicand = input(">enter radicand: √")
+user_limit = input(">enter upper limit (default is 20): ") 
+user_increment = input(">enter allowed increment (default is 1): ")
+user_goal = input(">enter goal multiple (default is set to increment): ")
+user_root_index = 2 #TODO: add options for higher order roots
+
+#goal_precision = len(user_increment[user_increment.find("."):])
+
+print("\n...")
 
 try:
     user_radicand = float(user_radicand)
@@ -95,9 +102,18 @@ print("\r          100% complete")
 #print("\n")
 print(u'\u2500' * 100)
 
-print(f"\n the closest multiplier that approaches an integer is: \n     >>{multiplier_to_int} * √{user_radicand}<<\n approximating: {closest_int}\n with a distance of {closest_to_int}")
+
+def printResults(multiplier, target, distance):
+    print(f"     >>{multiplier} * √{user_radicand}<<")
+    print(f" approximating: {target}")
+    print(f" with a distance of {distance}")
+
+print("\n the closest multiplier that approaches an integer is: ")
+printResults(multiplier_to_int, closest_int, closest_to_int)
+
 if(using_goal):
-    print(f"\n the closest multiplier that approaches a multiple of {user_goal} is: \n     >>{multiplier_to_goal}<<\n approximating: {closest_increment}\n with a distance of {closest_to_increment}")
+    print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
+    printResults(multiplier_to_goal, closest_increment, closest_to_increment)
 
 print("\n\n(end)\n\n")
 
