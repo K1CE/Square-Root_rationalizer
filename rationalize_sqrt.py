@@ -1,5 +1,22 @@
 
 
+class Data_Point():
+
+
+    def __init__(self, approximate, distance, multiplier, text="goal"):
+        self.approximate = approximate
+        self.distance = distance
+        self.multiplier = multiplier
+        self.text = text
+    
+    @classmethod
+    def from_data_point(self, data_point):
+        return Data_Point(data_point.approximate, data_point.distance, data_point.multiplier, data_point.text)
+        
+    def print(self):
+        print(f"multiplier {self.multiplier} with distance {self.distance} to {self.text} {self.approximate}")
+
+
 def is_number_tryexcept(s):
     """ Returns True if string is a number. """
     try:
@@ -7,8 +24,6 @@ def is_number_tryexcept(s):
         return True
     except ValueError:
         return False
-
-
 
 
 print("\n\n======== sqrt rationalizer ========")
@@ -54,9 +69,10 @@ closest_increment = 0
 multiplier_to_int = 0
 multiplier_to_goal = 0
 
-
 current_distance = -1
 using_goal = user_goal != 1
+
+
 
 print("\n")
 
@@ -65,7 +81,7 @@ for i in range(iterations):
     result = multiplier * ( (user_radicand) ** (1/user_root_index) )
     print("\r           ", end = "")
     
-    current_distance =  result % 1
+    current_distance = result % 1
     if current_distance < closest_to_int:
         closest_to_int = current_distance
         closest_int = result - result % 1
@@ -99,7 +115,7 @@ for i in range(iterations):
 print("\r          100% complete")
 
 #fun printHorizontalDivider(dOm: Dom) = { val drawChar = '&U+2014;' arrayOf(dOm.documentWidth, drawChar) }
-#print("\n")
+print("\n")
 print(u'\u2500' * 100)
 
 
