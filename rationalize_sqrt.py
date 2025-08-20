@@ -1,7 +1,9 @@
 
 
+#simple object for storing data in groups.
+#    represents a multiplier that approximates a number when it was multiplied by a square root
+#    TODO: add the function itself to the Data_Point class?
 class Data_Point():
-
 
     def __init__(self, approximate, distance, multiplier, text="goal"):
         self.approximate = approximate
@@ -67,32 +69,48 @@ best_goal_data = Data_Point(0, user_goal, 0)
 using_goal = user_goal != 1
 
 def find_match(value, multiplier, goal, text, distance_limit):
-    #print(f"value is {value}")   
+    #print(f"value is {value}") #debug code
     
+    #calculates distance to closest multiple of the goal. 
+    #because 'value' will be in between two approximate goal nums, we add goal/2 in conjunction with modulo to
+    #get the remainder only if it's half a goal num away
     distance = ((value + (goal/2)) % goal - goal/2)
     approximate = value - distance
     
-    #print(f"distance from goal {approximate} is {distance}")
+    #print(f"distance from goal {approximate} is {distance}") #debug code
+    #distance_limit is used to filter undesirable results
     if abs(distance) < distance_limit:
         data = Data_Point(approximate, distance, multiplier, text)
         data.print()
         return data
+    #returns null if theres no match
 
 print("\n")
 
 for i in range(iterations):
     print("\r           ", end = "")
     
-    
+    #current testcase
     multiplier = user_increment * (i + 1)
+    
+    #the core math function: multiplier √(radicand)
+    #the result is stored and compared with previous results to decide if the multiplier is notably close to an integer/goal
     result = multiplier * ( (user_radicand) ** (1/user_root_index) )
     
+    #***program always shows results for integers regardless of settings
+    
+    #previous best integer approximate is compared with this iteration.
     integer_data = find_match(result, multiplier, 1, "integer", abs(best_integer_data.distance))
+    #an output indicates that this iteration is closer to an integer
     if integer_data:
         best_integer_data = integer_data
 
+    #***if a custom goal or increment is set for iterating, the program will track the closest match to a multiple of that increment
     if using_goal:
+    
+        #previous best increment approximate is compared with this iteration
         goal_data = find_match(result, multiplier, user_goal, "goal", abs(best_goal_data.distance))
+        #an output indicates that this iteration is closer to a multiple of an increment
         if(goal_data):
             best_goal_data = goal_data
     
