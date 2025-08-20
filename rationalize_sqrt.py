@@ -1,4 +1,4 @@
-
+#########CLASSES
 
 #simple object for storing data in groups.
 #    represents a multiplier that approximates a number when it was multiplied by a square root
@@ -18,6 +18,11 @@ class Data_Point():
     def print(self):
         print(f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} {self.approximate}")
 
+
+
+
+
+#########FUNCTIONS
 
 def is_number_tryexcept(s):
     """ Returns True if string is a number. """
@@ -44,6 +49,12 @@ def find_match(value, multiplier, goal, text, distance_limit):
         return data
     #returns null if theres no match
 
+
+
+
+
+
+#########USER INPUT
 
 print("\n\n======== sqrt rationalizer ========")
 print("     leave blank for default") 
@@ -78,6 +89,15 @@ if not is_number_tryexcept(user_goal):
     user_goal = float(user_increment)
 user_goal = float(user_goal)
     
+    
+    
+    
+    
+    
+
+
+
+#########START OF MAIN PROCESS
 iterations = int(user_limit / user_increment)
 
 best_integer_data = Data_Point(0, 10000, 0, "integer")
@@ -97,8 +117,9 @@ for i in range(iterations):
     #the result is stored and compared with previous results to decide if the multiplier is notably close to an integer/goal
     result = multiplier * ( (user_radicand) ** (1/user_root_index) )
     
-    #***program always shows results for integers regardless of settings
     
+    
+    #***program always shows results for integers regardless of settings
     #previous best integer approximate is compared with this iteration.
     integer_data = find_match(result, multiplier, 1, "integer", abs(best_integer_data.distance))
     #an output indicates that this iteration is closer to an integer
@@ -120,6 +141,16 @@ print("\r          100% complete")
 print("\n")
 print(u'\u2500' * 100) #line
 
+#########END OF MAIN PROCESS
+
+
+
+
+
+
+
+
+#########USER OUTPUT
 
 def printResults(multiplier, target, distance):
     print(f"     >>{multiplier} * √{user_radicand}<<")
