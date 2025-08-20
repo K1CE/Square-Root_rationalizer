@@ -207,7 +207,7 @@ print("\n\nmentions:")
 for i in range(MAX_MENTIONS):
     if not mentions[i]:
         break
-    print(f"{mentions[i].multiplier}({abs(mentions[i].distance)})")
+    print(f"{mentions[i].multiplier}({round(abs(mentions[i].distance), 5)})")
 
 print("\n\n(end)\n\n")
 
