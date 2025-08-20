@@ -53,7 +53,9 @@ def find_match(value, multiplier, goal, text, distance_limit):
 def mod_minimum(new_entry):
     distance = abs(new_entry.distance)
     if distance < minimum_distance:
-        return minimum_distance - (distance - minimum_distance) / MAX_MENTIONS
+        #print(f"minimum {minimum_distance}")
+        #print(f"new minimum {minimum_distance - (distance - minimum_distance) / MAX_MENTIONS}")
+        return minimum_distance - (minimum_distance - distance) / MAX_MENTIONS
     else:
         return minimum_distance
 
@@ -66,7 +68,6 @@ def store_mention(data):
                 mentions[i] = data
                 return True
         else:
-            print()
             if abs(data.distance) < abs(mentions[i].distance):
                 mentions[i] = data
                 return True
