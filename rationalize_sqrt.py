@@ -61,18 +61,9 @@ user_goal = float(user_goal)
     
 iterations = int(user_limit / user_increment)
 
-integer_approximate = Data_Point(0, 10000, 0, "integer")
-
-closest_to_increment = user_increment
-
-closest_increment = 0
-
-multiplier_to_goal = 0
-
-best_integer_data = Data_Point(0, 10000, 0, text="integer")
+best_integer_data = Data_Point(0, 10000, 0, "integer")
 best_goal_data = Data_Point(0, user_goal, 0)
 
-current_distance = -1
 using_goal = user_goal != 1
 
 def find_match(value, multiplier, goal, text, distance_limit):
