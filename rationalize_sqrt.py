@@ -27,6 +27,23 @@ def is_number_tryexcept(s):
     except ValueError:
         return False
 
+def find_match(value, multiplier, goal, text, distance_limit):
+    #print(f"value is {value}") #debug code
+    
+    #calculates distance to closest multiple of the goal. 
+    #because 'value' will be in between two approximate goal nums, we add goal/2 in conjunction with modulo to
+    #get the remainder only if it's half a goal num away
+    distance = ((value + (goal/2)) % goal - goal/2)
+    approximate = value - distance
+    
+    #print(f"distance from goal {approximate} is {distance}") #debug code
+    #distance_limit is used to filter undesirable results
+    if abs(distance) < distance_limit:
+        data = Data_Point(approximate, distance, multiplier, text)
+        data.print()
+        return data
+    #returns null if theres no match
+
 
 print("\n\n======== sqrt rationalizer ========")
 print("     leave blank for default") 
@@ -67,23 +84,6 @@ best_integer_data = Data_Point(0, 10000, 0, "integer")
 best_goal_data = Data_Point(0, user_goal, 0)
 
 using_goal = user_goal != 1
-
-def find_match(value, multiplier, goal, text, distance_limit):
-    #print(f"value is {value}") #debug code
-    
-    #calculates distance to closest multiple of the goal. 
-    #because 'value' will be in between two approximate goal nums, we add goal/2 in conjunction with modulo to
-    #get the remainder only if it's half a goal num away
-    distance = ((value + (goal/2)) % goal - goal/2)
-    approximate = value - distance
-    
-    #print(f"distance from goal {approximate} is {distance}") #debug code
-    #distance_limit is used to filter undesirable results
-    if abs(distance) < distance_limit:
-        data = Data_Point(approximate, distance, multiplier, text)
-        data.print()
-        return data
-    #returns null if theres no match
 
 print("\n")
 
