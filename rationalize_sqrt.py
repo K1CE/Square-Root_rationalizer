@@ -1,3 +1,4 @@
+
 #########CLASSES
 
 #simple object for storing data in groups.
@@ -49,7 +50,29 @@ def find_match(value, multiplier, goal, text, distance_limit):
         return data
     #returns null if theres no match
 
+def mod_minimum(new_entry):
+    distance = abs(new_entry.distance)
+    if distance < minimum_distance:
+        return minimum_distance - (distance - minimum_distance) / MAX_MENTIONS
+    else:
+        return minimum_distance
 
+
+def store_mention(data):
+    space = mentions[MAX_MENTIONS - 1] is None
+    for i in range(MAX_MENTIONS):
+        if space:
+            if not mentions[i]:
+                mentions[i] = data
+                return True
+        else:
+            print()
+            if abs(data.distance) < abs(mentions[i].distance):
+                mentions[i] = data
+                return True
+        
+        
+        
 
 
 
@@ -88,7 +111,8 @@ user_increment = float(user_increment)
 if not is_number_tryexcept(user_goal):
     user_goal = float(user_increment)
 user_goal = float(user_goal)
-    
+
+using_goal = user_goal != 1
     
     
     
@@ -98,12 +122,16 @@ user_goal = float(user_goal)
 
 
 #########START OF MAIN PROCESS
+
+MAX_MENTIONS = 10
+
 iterations = int(user_limit / user_increment)
+minimum_distance = user_goal/10
 
 best_integer_data = Data_Point(0, 10000, 0, "integer")
 best_goal_data = Data_Point(0, user_goal, 0)
+mentions = [None] * 10
 
-using_goal = user_goal != 1
 
 print("\n")
 
@@ -117,7 +145,7 @@ for i in range(iterations):
     #the result is stored and compared with previous results to decide if the multiplier is notably close to an integer/goal
     result = multiplier * ( (user_radicand) ** (1/user_root_index) )
     
-    
+    best = False #track if it was selected for best option
     
     #***program always shows results for integers regardless of settings
     #previous best integer approximate is compared with this iteration.
@@ -125,6 +153,7 @@ for i in range(iterations):
     #an output indicates that this iteration is closer to an integer
     if integer_data:
         best_integer_data = integer_data
+        best = True
 
     #***if a custom goal or increment is set for iterating, the program will track the closest match to a multiple of that increment
     if using_goal:
@@ -132,8 +161,17 @@ for i in range(iterations):
         #previous best increment approximate is compared with this iteration
         goal_data = find_match(result, multiplier, user_goal, "goal", abs(best_goal_data.distance))
         #an output indicates that this iteration is closer to a multiple of an increment
-        if(goal_data):
+        if goal_data:
+            store_mention(best_goal_data)
             best_goal_data = goal_data
+            best = True
+    
+    if not best:
+        mention_data = find_match(result, multiplier, user_goal, "mention", minimum_distance)#redundant
+        if mention_data:
+            stored = store_mention(mention_data)
+            if stored:
+                minimum_distance = mod_minimum(mention_data)
     
     print(f"{int(i/iterations * 100)}% complete", end="")
     
@@ -163,6 +201,12 @@ printResults(best_integer_data.multiplier, best_integer_data.approximate, abs(be
 if(using_goal):
     print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
     printResults(best_goal_data.multiplier, best_goal_data.approximate, abs(best_goal_data.distance))
+
+print("\n\nmentions:")
+for i in range(MAX_MENTIONS):
+    if not mentions[i]:
+        break
+    print(f"{mentions[i].multiplier}({abs(mentions[i].distance)})")
 
 print("\n\n(end)\n\n")
 
