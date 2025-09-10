@@ -91,12 +91,15 @@ print("     The original purpose of this was to find side lengths of right trian
 print("     √2 or √3 is the usual problem number\n\n")
 
 user_radicand = input(">enter radicand: √")
-user_radicand_list = [None]
+user_radicand_list = []
 if len(sys.argv) > 1 and sys.argv[1] == "-advanced":
-    i = 1
-    while user_radicand_list[i]:
+    i = 0
+    while True:
         i += 1
-        user_radicand_list.append(input(">enter extra radicand (optional): √"))
+        extra = input(">enter extra radicand (optional): √")
+        if extra == "": 
+            break
+        user_radicand_list.append(extra)
 user_limit = input(">enter upper limit (default is 20): ") 
 user_increment = input(">enter allowed increment (default is 1): ")
 user_goal = input(">enter goal multiple (default is set to increment): ")
