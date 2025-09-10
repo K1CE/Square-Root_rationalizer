@@ -1,3 +1,7 @@
+#########IMPORTS
+import sys
+
+
 
 #########CLASSES
 
@@ -87,6 +91,12 @@ print("     The original purpose of this was to find side lengths of right trian
 print("     √2 or √3 is the usual problem number\n\n")
 
 user_radicand = input(">enter radicand: √")
+user_radicand_list = [None]
+if len(sys.argv) > 1 and sys.argv[1] == "-advanced":
+    i = 1
+    while user_radicand_list[i]:
+        i += 1
+        user_radicand_list.append(input(">enter extra radicand (optional): √"))
 user_limit = input(">enter upper limit (default is 20): ") 
 user_increment = input(">enter allowed increment (default is 1): ")
 user_goal = input(">enter goal multiple (default is set to increment): ")
@@ -114,9 +124,6 @@ if not is_number_tryexcept(user_goal):
 user_goal = float(user_goal)
 
 using_goal = user_goal != 1
-    
-    
-    
     
     
 
