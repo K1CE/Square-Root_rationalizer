@@ -83,6 +83,7 @@ def store_mention(data):
 
 
 #########USER INPUT
+advancedMode = len(sys.argv) > 1 and sys.argv[1] == "-advanced"
 
 print("\n\n======== sqrt rationalizer ========")
 print("     leave blank for default") 
@@ -92,7 +93,7 @@ print("     √2 or √3 is the usual problem number\n\n")
 
 user_radicand = input(">enter radicand: √")
 user_radicand_list = []
-if len(sys.argv) > 1 and sys.argv[1] == "-advanced":
+if advancedMode:
     i = 0
     while True:
         i += 1
