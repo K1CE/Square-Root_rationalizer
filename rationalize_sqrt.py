@@ -10,8 +10,8 @@ import sys
 #    TODO: add the function itself to the Data_Point class?
 class Data_Point():
 
-    def __init__(self, approximate, distance, multiplier, text="goal"):
-        self.approximate = approximate
+    def __init__(self, approximates, distance, multiplier, text="goal"):
+        self.approximates = approximates
         self.distance = distance
         self.multiplier = multiplier
         self.text = text
@@ -21,7 +21,11 @@ class Data_Point():
         return Data_Point(data_point.approximate, data_point.distance, data_point.multiplier, data_point.text)
         
     def print(self):
-        print(f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} {self.approximate}")
+        print(f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} ", end = "")
+        for i in range(len(self.approximates)):
+            print(self.approximates[i], end = "")
+            if i < len(self.approximates) - 1:
+                print(", ", end = "")
 
 
 
@@ -37,19 +41,26 @@ def is_number_tryexcept(s):
     except ValueError:
         return False
 
-def find_match(value, multiplier, goal, text, distance_limit):
+def find_match(values, multiplier, goal, text, distance_limit):
     #print(f"value is {value}") #debug code
     
     #calculates distance to closest multiple of the goal. 
     #because 'value' will be in between two approximate goal nums, we add goal/2 in conjunction with modulo to
     #get the remainder only if it's half a goal num away
-    distance = ((value + (goal/2)) % goal - goal/2)
-    approximate = value - distance
+    averageDistance = 0
+    distance = 0
+    approximates = []
+    for i in reversed(range(len(values))):
+        distance = ((values[i] + (goal/2)) % goal - goal/2)
+        averageDistance += abs(distance)
+        approximates.append(values[i] - distance)
+    
+    averageDistance = averageDistance / len(values)
     
     #print(f"distance from goal {approximate} is {distance}") #debug code
     #distance_limit is used to filter undesirable results
-    if abs(distance) < distance_limit:
-        data = Data_Point(approximate, distance, multiplier, text)
+    if abs(averageDistance) < distance_limit and abs(distance) < distance_limit:
+        data = Data_Point(approximates, averageDistance, multiplier, text)
         data.print()
         return data
     #returns null if theres no match
@@ -83,6 +94,7 @@ def store_mention(data):
 
 
 #########USER INPUT
+
 advancedMode = len(sys.argv) > 1 and sys.argv[1] == "-advanced"
 
 print("\n\n======== sqrt rationalizer ========")
@@ -161,7 +173,7 @@ for i in range(iterations):
     
     #***program always shows results for integers regardless of settings
     #previous best integer approximate is compared with this iteration.
-    integer_data = find_match(result, multiplier, 1, "integer", abs(best_integer_data.distance))
+    integer_data = find_match([result], multiplier, 1, "integer", abs(best_integer_data.distance))
     #an output indicates that this iteration is closer to an integer
     if integer_data:
         best_integer_data = integer_data
@@ -178,8 +190,9 @@ for i in range(iterations):
             best_goal_data = goal_data
             best = True
     
+    #***this is the honorable mentions circuit. remembers results that aren't the best
     if not best:
-        mention_data = find_match(result, multiplier, user_goal, "mention", minimum_distance)#redundant
+        mention_data = find_match([result], multiplier, user_goal, "mention", minimum_distance)#redundant
         if mention_data:
             stored = store_mention(mention_data)
             if stored:
@@ -202,17 +215,18 @@ print(u'\u2500' * 100) #line
 
 #########USER OUTPUT
 
-def printResults(multiplier, target, distance):
-    print(f"     >>{multiplier} * √{user_radicand}<<")
-    print(f" approximating: {target}")
-    print(f" with a distance of {distance}")
+def printResults(multiplier, targets, distance):
+    if len(targets) <= 1:
+        print(f"     >>{multiplier} * √{user_radicand}<<")
+        print(f" approximating: {targets[0]}")
+        print(f" with a distance of {distance}")
 
 print("\n the closest multiplier that approaches an integer is: ")
-printResults(best_integer_data.multiplier, best_integer_data.approximate, abs(best_integer_data.distance))
+printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
 
 if(using_goal):
     print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
-    printResults(best_goal_data.multiplier, best_goal_data.approximate, abs(best_goal_data.distance))
+    printResults(best_goal_data.multiplier, best_goal_data.approximates, abs(best_goal_data.distance))
 
 print("\n\nmentions:")
 for i in range(MAX_MENTIONS):
