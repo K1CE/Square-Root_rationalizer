@@ -26,7 +26,7 @@ class Data_Point():
             print(self.approximates[i], end = "")
             if i < len(self.approximates) - 1:
                 print(", ", end = "")
-
+        print()
 
 
 
