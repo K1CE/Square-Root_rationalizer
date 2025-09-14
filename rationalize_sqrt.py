@@ -50,7 +50,7 @@ def find_match(values, multiplier, goal, text, distance_limit):
     averageDistance = 0
     distance = 0
     approximates = []
-    for i in reversed(range(len(values))):
+    for i in range(len(values)):
         distance = ((values[i] + (goal/2)) % goal - goal/2)
         averageDistance += abs(distance)
         approximates.append(values[i] - distance)
@@ -103,8 +103,8 @@ print("     This program is designed to find the multiples of a square root whic
 print("     The original purpose of this was to find side lengths of right triangles and other geometric shapes which approximate to workable lengths.")
 print("     √2 or √3 is the usual problem number\n\n")
 
-user_radicand = input(">enter radicand: √")
 user_radicand_list = []
+user_radicand_list.append(input(">enter radicand: √"))
 if advancedMode:
     i = 0
     while True:
@@ -122,10 +122,13 @@ user_root_index = 2 #TODO: add options for higher order roots
 
 print("\n...")
 
-try:
-    user_radicand = float(user_radicand)
-except ValueError:
-    print(f"'√{user_radicand}' is not a valid number.")
+num_radicands = len(user_radicand_list)
+
+for i in range(num_radicands):
+    try:
+        user_radicand_list[i] = float(user_radicand_list[i])
+    except ValueError:
+        print(f"'√{user_radicand_list[i]}' is not a valid number.")
 
 if not is_number_tryexcept(user_limit):
     user_limit = 20
@@ -156,7 +159,6 @@ best_integer_data = Data_Point(0, 10000, 0, "integer")
 best_goal_data = Data_Point(0, user_goal, 0)
 mentions = [None] * 10
 
-
 print("\n")
 
 for i in range(iterations):
@@ -167,13 +169,15 @@ for i in range(iterations):
     
     #the core math function: multiplier √(radicand)
     #the result is stored and compared with previous results to decide if the multiplier is notably close to an integer/goal
-    result = multiplier * ( (user_radicand) ** (1/user_root_index) )
+    results = []
+    for g in range(num_radicands):
+        results.append(multiplier * ( (user_radicand_list[g]) ** (1/user_root_index) ))
     
     best = False #track if it was selected for best option
     
     #***program always shows results for integers regardless of settings
     #previous best integer approximate is compared with this iteration.
-    integer_data = find_match([result], multiplier, 1, "integer", abs(best_integer_data.distance))
+    integer_data = find_match(results, multiplier, 1, "integer", abs(best_integer_data.distance))
     #an output indicates that this iteration is closer to an integer
     if integer_data:
         best_integer_data = integer_data
@@ -183,7 +187,7 @@ for i in range(iterations):
     if using_goal:
     
         #previous best increment approximate is compared with this iteration
-        goal_data = find_match(result, multiplier, user_goal, "goal", abs(best_goal_data.distance))
+        goal_data = find_match(results, multiplier, user_goal, "goal", abs(best_goal_data.distance))
         #an output indicates that this iteration is closer to a multiple of an increment
         if goal_data:
             store_mention(best_goal_data)
@@ -192,7 +196,7 @@ for i in range(iterations):
     
     #***this is the honorable mentions circuit. remembers results that aren't the best
     if not best:
-        mention_data = find_match([result], multiplier, user_goal, "mention", minimum_distance)#redundant
+        mention_data = find_match(results, multiplier, user_goal, "mention", minimum_distance)#redundant
         if mention_data:
             stored = store_mention(mention_data)
             if stored:
@@ -217,9 +221,21 @@ print(u'\u2500' * 100) #line
 
 def printResults(multiplier, targets, distance):
     if len(targets) <= 1:
-        print(f"     >>{multiplier} * √{user_radicand}<<")
+        print(f"     >>{multiplier} * √{user_radicand_list[0]}<<")
         print(f" approximating: {targets[0]}")
         print(f" with a distance of {distance}")
+    else:
+        print(f"     >>{multiplier} * (√{user_radicand_list[0]}", end="")
+        for i in range(1, num_radicands):
+            print(f" OR √{user_radicand_list[i]}", end="")
+        print(")<<")
+        
+        print(f" approximating: {targets[0]}", end="")
+        for i in range(1, num_radicands):
+            print(f", {targets[i]}", end="")
+        print()
+        
+        print(f" with an average distance of {distance}")
 
 print("\n the closest multiplier that approaches an integer is: ")
 printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
