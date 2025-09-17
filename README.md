@@ -1,4 +1,5 @@
 <p align="center"><img width="462" height="100" src="https://github.com/user-attachments/assets/1c3ab3bb-cb59-48ff-8c06-b01d2a2a24a2" alt="Logo Laravel Boost"></p>
+
 ![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)
 
 # △
