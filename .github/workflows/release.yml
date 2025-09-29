@@ -9,7 +9,7 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+rc[0-9]+"
 
 env:
-  PACKAGE_NAME: "sqrt_rationalizer"
+  PACKAGE_NAME: "rationalize_sqrt"
   OWNER: "KICE"
 
 jobs:
