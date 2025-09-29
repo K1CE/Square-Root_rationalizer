@@ -1,6 +1,15 @@
-[build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
+[project]
+name = "sqrt_rationalizer"
+version = "0.1.4"
+description = "command-line app for finding multipliers of square roots"
+authors = [
+    {name = "KICE", email = "6kouman@gmail.com"}
 ]
-build-backend = "setuptools.build_meta"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
