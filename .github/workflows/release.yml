@@ -91,6 +91,7 @@ jobs:
         run: |
           poetry sync
           poetry install --no-interaction
+          poetry add --dev mypy
 
       - name: Run stub generation
         run: poetry run stubgen ${{ env.PACKAGE_NAME }} -o .
