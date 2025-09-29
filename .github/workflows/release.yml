@@ -88,7 +88,7 @@ jobs:
           poetry version ${{ needs.details.outputs.new_version }}
 
       - name: Install dependencies
-        run: poetry install --sync --no-interaction
+        run: poetry install sync --no-interaction
 
       - name: Run stub generation
         run: poetry run stubgen ${{ env.PACKAGE_NAME }} -o .
