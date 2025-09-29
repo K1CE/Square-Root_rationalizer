@@ -1,6 +1,6 @@
 [project]
-name = "sqrt_rationalizer"
-version = "0.1.4"
+name = "rationalize_sqrt"
+version = "0.1.7"
 description = "command-line app for finding multipliers of square roots"
 authors = [
     {name = "KICE", email = "6kouman@gmail.com"}
