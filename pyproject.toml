@@ -3,7 +3,7 @@ name = "rationalize_sqrt"
 version = "0.1.7"
 description = "command-line app for finding multipliers of square roots"
 authors = [
-    {name = "KICE", email = "6kouman@gmail.com"}
+    {name = "K1CE", email = "6kouman@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.9"
