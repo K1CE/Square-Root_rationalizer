@@ -1,6 +1,10 @@
 <p align="center"><img width="462" height="100" src="https://github.com/user-attachments/assets/1c3ab3bb-cb59-48ff-8c06-b01d2a2a24a2" alt="Logo Laravel Boost"></p>
 
-![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)
+<div align="center" markdown="1">
+  
+  ![pypi version](https://img.shields.io/pypi/v/rationalize-sqrt)
+  ![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)
+</div>
 
 # △
   This project is intended to be used as a simple calculator for bruteforcing and displaying different variations of irrational square-roots. 
