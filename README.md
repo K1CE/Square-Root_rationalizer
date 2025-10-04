@@ -4,6 +4,7 @@
   
   ![pypi version](https://img.shields.io/pypi/v/rationalize-sqrt)
   ![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)
+  ![issues](https://img.shields.io/github/issues-raw/K1CE/Square-Root_rationalizer)
 </div>
 
 # △
