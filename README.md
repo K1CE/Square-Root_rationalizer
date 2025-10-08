@@ -18,8 +18,7 @@
 :-------------------------:|:-------------------------:
 Example from game: Reassembly <br/> Unable to connect the two parts on the right together; the structure loses overall stability | Example from Roblox studio: making a hexagon with walls results in stubborn seams which can be mitigated by choosing a better scale
 
-  Although it's useful for design work where exact precision isn't necessary, this may not be the solution if you're looking for triangles with actual
-  whole numbers.
+  Although it's useful for design work where exact precision isn't necessary, this may not be the solution if you're looking to replace the irrational numbers within a 30/60/90 or 45/45/90 triangle with exact whole ones.
 
 ## The Problem
 
