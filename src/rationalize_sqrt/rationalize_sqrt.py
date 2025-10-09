@@ -147,10 +147,12 @@ if not is_number_tryexcept(user_limit):
     user_limit = 20
 user_limit = float(user_limit)
 
+user_increment = attempt_convert_scientific_notation(user_increment)
 if not is_number_tryexcept(user_increment):
     user_increment = 1
 user_increment = float(user_increment)
 
+user_goal = attempt_convert_scientific_notation(user_goal)
 if not is_number_tryexcept(user_goal):
     user_goal = float(user_increment)
 user_goal = float(user_goal)
