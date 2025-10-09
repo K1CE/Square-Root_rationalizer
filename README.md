@@ -2,10 +2,10 @@
 
 <div align="center" markdown="1">
   
-  ![pypi version](https://img.shields.io/pypi/v/rationalize-sqrt)
-  ![python version](https://img.shields.io/pypi/pyversions/rationalize-sqrt)
-  ![issues](https://img.shields.io/github/issues-raw/K1CE/Square-Root_rationalizer)
-  ![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)
+  [![pypi version](https://img.shields.io/pypi/v/rationalize-sqrt)](https://pypi.org/project/rationalize-sqrt/#description)
+  [![python version](https://img.shields.io/pypi/pyversions/rationalize-sqrt)](https://www.python.org/)
+  [![issues](https://img.shields.io/github/issues-raw/K1CE/Square-Root_rationalizer)](https://github.com/K1CE/Square-Root_rationalizer/issues)
+  [![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)](https://github.com/K1CE/Square-Root_rationalizer/blob/main/LICENSE.md)
 </div>
 
 # △
