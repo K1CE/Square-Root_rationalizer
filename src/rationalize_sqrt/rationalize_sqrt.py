@@ -41,6 +41,18 @@ def is_number_tryexcept(s):
     except ValueError:
         return False
 
+def attempt_convert_scientific_notation(s):
+    s = s.lower()
+    index = s.find('e')
+    if index >= 0:
+        s1 = s[0:index]
+        s2 = s[index + 1:]
+        if is_number_tryexcept(s1) and is_number_tryexcept(s2):
+            return float(s1) ** float(s2)
+    return s
+    
+    
+
 def find_match(values, multiplier, goal, text, distance_limit):
     #print(f"value is {value}") #debug code
     
@@ -130,6 +142,7 @@ for i in range(num_radicands):
     except ValueError:
         print(f"'√{user_radicand_list[i]}' is not a valid number.")
 
+user_limit = attempt_convert_scientific_notation(user_limit)
 if not is_number_tryexcept(user_limit):
     user_limit = 20
 user_limit = float(user_limit)
