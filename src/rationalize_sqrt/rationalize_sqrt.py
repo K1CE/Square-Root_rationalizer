@@ -1,5 +1,6 @@
 #########IMPORTS
 import sys
+import time
 
 
 
@@ -174,6 +175,10 @@ best_integer_data = Data_Point(0, 10000, 0, "integer")
 best_goal_data = Data_Point(0, user_goal, 0)
 mentions = [None] * 10
 
+
+#tracking completion time
+start_time = time.time()
+
 print("\n")
 
 for i in range(iterations):
@@ -219,7 +224,8 @@ for i in range(iterations):
     
     print(f"{int(i/iterations * 100)}% complete", end="")
     
-print("\r          100% complete")
+print("\r           100% complete")
+print("           %ss" % (round(time.time() - start_time, 4))) #execution time
 print("\n")
 print(u'\u2500' * 100) #line
 
@@ -265,5 +271,23 @@ for i in range(MAX_MENTIONS):
         break
     print(f"{mentions[i].multiplier}({round(abs(mentions[i].distance), 5)})")
 
-print("\n\n(end)\n\n")
+
+#ascii
+print("\n\n")      
+print("                      ▲")
+print("                            ◣")
+print("                               ▼")
+print("")
+print("                                ◥")
+print("")
+print("                            ◤")
+print("")
+print("                        ►")
+print("                     ◂")
+print("                    ▸")
+print("                     ▸")
+print("")
+print("                         ◃")
+
+print("\n(end)\n\n")
 
