@@ -271,5 +271,23 @@ for i in range(MAX_MENTIONS):
         break
     print(f"{mentions[i].multiplier}({round(abs(mentions[i].distance), 5)})")
 
-print("\n\n(end)\n\n")
+
+#ascii
+print("\n\n")      
+print("                      ▲")
+print("                            ◣")
+print("                               ▼")
+print("")
+print("                                ◥")
+print("")
+print("                            ◤")
+print("")
+print("                        ►")
+print("                     ◂")
+print("                    ▸")
+print("                     ▸")
+print("")
+print("                         ◃")
+
+print("\n(end)\n\n")
 
