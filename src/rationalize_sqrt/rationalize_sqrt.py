@@ -267,7 +267,7 @@ if(using_goal):
 
 print("\n\nmentions:")
 for i in range(MAX_MENTIONS):
-    if not mentions[i]:
+    if not mentions[i]: #list ends here so leave loop
         break
     print(f"{mentions[i].multiplier}({round(abs(mentions[i].distance), 5)})")
 
