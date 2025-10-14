@@ -269,6 +269,7 @@ print("\n\nmentions:")
 for i in range(MAX_MENTIONS):
     if not mentions[i]: #list ends here so leave loop
         break
+    #custom e notation for rounding results
     mentionV = mentions[i].distance
     mentionE = 0
     if mentionV != 0.0:
@@ -276,6 +277,7 @@ for i in range(MAX_MENTIONS):
             mentionV *= 10
             mentionE -= 1
     mentionV = round(abs(mentionV), 5)
+    
     print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
 
 
