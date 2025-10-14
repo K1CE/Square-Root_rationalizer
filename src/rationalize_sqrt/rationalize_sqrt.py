@@ -269,7 +269,14 @@ print("\n\nmentions:")
 for i in range(MAX_MENTIONS):
     if not mentions[i]: #list ends here so leave loop
         break
-    print(f"{mentions[i].multiplier}({round(abs(mentions[i].distance), 5)})")
+    mentionV = mentions[i].distance
+    mentionE = 0
+    if mentionV != 0.0:
+        while int(mentionV) == 0.0:
+            mentionV *= 10
+            mentionE -= 1
+    mentionV = round(abs(mentionV), 5)
+    print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
 
 
 #ascii
