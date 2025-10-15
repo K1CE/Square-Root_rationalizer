@@ -49,7 +49,7 @@ def attempt_convert_scientific_notation(s):
         s1 = s[0:index]
         s2 = s[index + 1:]
         if is_number_tryexcept(s1) and is_number_tryexcept(s2):
-            return float(s1) ** float(s2)
+            return float(s1) * (10 ** float(s2))
     return s
     
     
