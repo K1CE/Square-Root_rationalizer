@@ -9,6 +9,8 @@
 </div>
 
 # △
+  A way to rationalize a square root to a whole number. make your square root whole.
+
   This project is intended to be used as a simple calculator for bruteforcing and displaying different variations of irrational square-roots. 
   I quickly built this for myself in a couple hours to fix an issue with my design work. By using this app I found a strong candidate for the 
   side lengths of my hexagon's broken down model. When splayed out into triangles and squares each side length could be approximately represented
