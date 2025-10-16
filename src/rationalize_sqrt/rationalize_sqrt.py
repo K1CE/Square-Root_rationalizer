@@ -108,7 +108,7 @@ def store_mention(data):
 
 #########USER INPUT
 
-advancedMode = len(sys.argv) > 1 and sys.argv[1] == "-advanced"
+advancedMode = len(sys.argv) > 1 and sys.argv[1] == "--advanced"
 
 print("\n\n======== sqrt rationalizer ========")
 print("     leave blank for default") 
