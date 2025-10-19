@@ -60,3 +60,15 @@ Finally, we can fill the gap left by the odd geometry with a rectangle that's ex
 1. Install [Python 3.14]([https://www.python.org/downloads/release/python-31210/](https://www.python.org/downloads/))
 2. Download and extract the repository into a folder
 3. Run `run.cmd`, `run advanced.cmd`, or `rationalize_sqrt.py` through a CLI
+
+
+## Command-Line Arguments (WIP)
+| Flag | Description |
+|-----|-----|
+| `--version` | Show app version |
+| `--help` | Shows argument list |
+| `--advanced`| Runs app with extra options |
+| `--checkupdate` | Check for available updates from GitHub |
+| `--no_log` | Only show best output |
+| `--save_results` | Save results to file |
+| `--save_folder` | Set result save folder |
