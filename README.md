@@ -57,7 +57,7 @@ Finally, we can fill the gap left by the odd geometry with a rectangle that's ex
 
 ---
 ## Installation
-1. Install [Python 3.14]([https://www.python.org/downloads/release/python-31210/](https://www.python.org/downloads/))
+1. Install [Python 3.14](https://www.python.org/downloads/)
 2. Download and extract the repository into a folder
 3. Run `run.cmd`, `run advanced.cmd`, or `rationalize_sqrt.py` through a CLI
 
