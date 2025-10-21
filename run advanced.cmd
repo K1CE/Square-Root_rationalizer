@@ -1,2 +1,2 @@
-python src/rationalize_sqrt/rationalize_sqrt.py -advanced
+python src/rationalize_sqrt/rationalize_sqrt.py --advanced
 pause
