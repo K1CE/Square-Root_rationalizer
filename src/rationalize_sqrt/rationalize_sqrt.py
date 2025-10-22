@@ -108,7 +108,21 @@ def store_mention(data):
 
 #########USER INPUT
 
-advancedMode = len(sys.argv) > 1 and sys.argv[1] == "--advanced"
+#handle args
+if len(sys.argv) > 1:
+    for i in range(len(sys.argv)):
+        if sys.argv[i][:1] == '-':
+        
+            match sys.argv[i]:
+                case "--advanced" | "-a":
+                    advancedMode = True
+                case "--help" | "-h":
+                    print("dont feel like it")
+                    sys.exit(0)
+                case "--version" | "-v":
+                    print("yuh it has a version")
+                    sys.exit(0)
+
 
 print("\n\n======== sqrt rationalizer ========")
 print("     leave blank for default") 
