@@ -99,9 +99,27 @@ def store_mention(data):
             if abs(data.distance) < abs(mentions[i].distance):
                 mentions[i] = data
                 return True
-        
-        
-        
+
+#arg registry
+def advanced_mode():
+    advancedMode = True
+    
+def help_mode():
+    print("dont feel like it")
+    sys.exit(0)
+    
+def version_mode():
+    print("yuh it has a version")
+    sys.exit(0)
+
+arg_reg = {
+    '--advanced' : advanced_mode,
+    '-a' : advanced_mode,
+    '--help' : help_mode,
+    '-h' : help_mode,
+    '--version' : version_mode,
+    '-v' : version_mode,
+}
 
 
 
@@ -112,16 +130,8 @@ def store_mention(data):
 if len(sys.argv) > 1:
     for i in range(len(sys.argv)):
         if sys.argv[i][:1] == '-':
-        
-            match sys.argv[i]:
-                case "--advanced" | "-a":
-                    advancedMode = True
-                case "--help" | "-h":
-                    print("dont feel like it")
-                    sys.exit(0)
-                case "--version" | "-v":
-                    print("yuh it has a version")
-                    sys.exit(0)
+            arg_reg[sys.argv[i]]()
+                    
 
 
 print("\n\n======== sqrt rationalizer ========")
