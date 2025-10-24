@@ -127,10 +127,17 @@ arg_reg = {
 #########USER INPUT
 
 #handle args
+
+#todo: add try catch
 if len(sys.argv) > 1:
     for i in range(len(sys.argv)):
         if sys.argv[i][:1] == '-':
-            arg_reg[sys.argv[i]]()
+            try:
+                arg_reg[sys.argv[i]]()
+            except KeyError:
+                print(f"'{sys.argv[i]}' is not a valid option.")
+                sys.exit(0)
+                
                     
 
 
