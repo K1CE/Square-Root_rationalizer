@@ -105,7 +105,8 @@ def advanced_mode():
     advancedMode = True
     
 def help_mode():
-    print("dont feel like it")
+    for key in arg_reg:
+        print(f"{key}: {arg_reg[key].__name__}")
     sys.exit(0)
     
 def version_mode():
