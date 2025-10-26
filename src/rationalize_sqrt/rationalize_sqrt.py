@@ -1,302 +1,303 @@
 #########IMPORTS
 import sys
 import time
+import math
 
 
 
 #########CLASSES
 
-#simple object for storing data in groups.
-#    represents a multiplier that approximates a number when it was multiplied by a square root
-#    TODO: add the function itself to the Data_Point class?
+# Simple object for storing data in groups.
+# Represents a multiplier that approximates a number when it was multiplied by a square root.
 class Data_Point():
 
     def __init__(self, approximates, distance, multiplier, text="goal"):
+        """
+        Initializes a Data_Point object.
+        
+        Args:
+            approximates (list[float]): The list of approximate whole numbers/goal multiples.
+            distance (float): The average distance from the ideal integer/goal multiple.
+            multiplier (float): The multiplier that produced these approximations.
+            text (str): A label for this data point (e.g., "integer", "goal", "mention").
+        """
         self.approximates = approximates
         self.distance = distance
         self.multiplier = multiplier
         self.text = text
     
-    @classmethod
-    def from_data_point(self, data_point):
-        return Data_Point(data_point.approximate, data_point.distance, data_point.multiplier, data_point.text)
+    # Allows Data_Point objects to be compared based on their absolute distance.
+    # Essential for sorting honorable mentions (closer distance is "less than").
+    def __lt__(self, other):
+        return abs(self.distance) < abs(other.distance)
         
-    def print(self):
-        print(f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} ", end = "")
-        for i in range(len(self.approximates)):
-            print(self.approximates[i], end = "")
-            if i < len(self.approximates) - 1:
-                print(", ", end = "")
-        print()
-
-
+    def __eq__(self, other):
+        return math.isclose(abs(self.distance), abs(other.distance))
+        
+    def __repr__(self):
+        """A simple representation for debugging."""
+        return f"Data_Point(m={self.multiplier}, d={self.distance:.6f}, t='{self.text}')"
 
 
 #########FUNCTIONS
 
 def is_number_tryexcept(s):
-    """ Returns True if string is a number. """
+    """ Returns True if string can be converted to a float. """
     try:
         float(s)
         return True
-    except ValueError:
+    except (ValueError, TypeError):
         return False
 
 def attempt_convert_scientific_notation(s):
-    s = s.lower()
-    index = s.find('e')
+    """
+    Converts a string to a float, handling scientific notation (e.g., '1e-5').
+    If the string is not convertible, it returns the original string.
+    """
+    s_str = str(s).lower() # Ensure s is a string and lowercase for 'e'
+    index = s_str.find('e')
     if index >= 0:
-        s1 = s[0:index]
-        s2 = s[index + 1:]
+        s1 = s_str[0:index]
+        s2 = s_str[index + 1:]
         if is_number_tryexcept(s1) and is_number_tryexcept(s2):
             return float(s1) * (10 ** float(s2))
-    return s
     
+    if is_number_tryexcept(s):
+        return float(s)
     
+    return s # Return original string if not convertible
+
 
 def find_match(values, multiplier, goal, text, distance_limit):
-    #print(f"value is {value}") #debug code
+    """
+    Calculates the average distance of a set of values to the closest multiples of a goal.
     
-    #calculates distance to closest multiple of the goal. 
-    #because 'value' will be in between two approximate goal nums, we add goal/2 in conjunction with modulo to
-    #get the remainder only if it's half a goal num away
-    averageDistance = 0
-    distance = 0
+    Args:
+        values (list[float]): The calculated results for the current multiplier.
+        multiplier (float): The current multiplier.
+        goal (float): The target multiple (e.g., 1 for integers, user's custom goal).
+        text (str): Descriptive text for the Data_Point (e.g., "integer", "goal").
+        distance_limit (float): The maximum absolute average distance allowed for a match.
+    
+    Returns:
+        Data_Point or None: A Data_Point object if a match is found, otherwise None.
+    """
+    if not values:
+        return None
+
+    average_distance = 0.0
     approximates = []
-    for i in range(len(values)):
-        distance = ((values[i] + (goal/2)) % goal - goal/2)
-        averageDistance += abs(distance)
-        approximates.append(values[i] - distance)
     
-    averageDistance = averageDistance / len(values)
+    for val in values:
+        distance_to_goal_multiple = ((val + (goal / 2)) % goal) - (goal / 2)
+        average_distance += abs(distance_to_goal_multiple)
+        approximates.append(val - distance_to_goal_multiple)
     
-    #print(f"distance from goal {approximate} is {distance}") #debug code
-    #distance_limit is used to filter undesirable results
-    if abs(averageDistance) < distance_limit and abs(distance) < distance_limit:
-        data = Data_Point(approximates, averageDistance, multiplier, text)
-        data.print()
-        return data
-    #returns null if theres no match
+    average_distance = average_distance / len(values)
+    
+    if abs(average_distance) < distance_limit:
+        return Data_Point(approximates, average_distance, multiplier, text)
+    
+    return None
 
-def mod_minimum(new_entry):
-    distance = abs(new_entry.distance)
-    if distance < minimum_distance:
-        #print(f"minimum {minimum_distance}")
-        #print(f"new minimum {minimum_distance - (distance - minimum_distance) / MAX_MENTIONS}")
-        return minimum_distance - (minimum_distance - distance) / MAX_MENTIONS
+
+def store_mention(data, mentions_list, max_mentions):
+    """
+    Stores a Data_Point in the mentions_list, maintaining it sorted by distance.
+    
+    Args:
+        data (Data_Point): The new Data_Point to potentially store.
+        mentions_list (list[Data_Point]): The current list of honorable mentions.
+        max_mentions (int): The maximum number of mentions to store.
+    """
+    if len(mentions_list) < max_mentions:
+        mentions_list.append(data)
+        mentions_list.sort()
+    elif data < mentions_list[-1]:
+        mentions_list[-1] = data
+        mentions_list.sort()
+
+
+def _format_result_string(data_point, original_radicands_list):
+    """
+    Formats a Data_Point into a human-readable string.
+    """
+    if not data_point or data_point.distance > 1000:
+        return "No suitable match found."
+
+    num_radicands = len(original_radicands_list)
+    multiplier = data_point.multiplier
+    targets = data_point.approximates
+    distance = data_point.distance
+
+    result_lines = []
+    
+    if num_radicands <= 1:
+        result_lines.append(f"    >> {multiplier:.6g} * √{original_radicands_list[0]} <<")
+        result_lines.append(f"    approximating: {targets[0]:.6f}")
+        result_lines.append(f"    with a distance of {abs(distance):.6g}")
     else:
-        return minimum_distance
-
-
-def store_mention(data):
-    space = mentions[MAX_MENTIONS - 1] is None
-    for i in range(MAX_MENTIONS):
-        if space:
-            if not mentions[i]:
-                mentions[i] = data
-                return True
-        else:
-            if abs(data.distance) < abs(mentions[i].distance):
-                mentions[i] = data
-                return True
+        radicand_str_parts = [f"√{r:.6g}" for r in original_radicands_list]
+        result_lines.append(f"    >> {multiplier:.6g} * ({' OR '.join(radicand_str_parts)}) <<")
         
+        approx_targets_str = ", ".join([f"{t:.6f}" for t in targets])
+        result_lines.append(f"    approximating: {approx_targets_str}")
+        result_lines.append(f"    with an average distance of {abs(distance):.6g}")
+    
+    return "\n".join(result_lines)
+
+def _generate_svg_graphic(points, x_limit, y_limit):
+    """
+    Generates an SVG scatter plot of multipliers vs. distances.
+    
+    Args:
+        points (list[Data_Point]): A list of all data points found.
+        x_limit (float): The maximum multiplier value (for X-axis).
+        y_limit (float): The maximum distance value (for Y-axis).
+
+    Returns:
+        str: A string containing the SVG data.
+    """
+    if not points:
+        return "<svg width='500' height='300'><text x='50' y='150'>No data points to plot.</text></svg>"
+    
+    WIDTH, HEIGHT = 500, 300
+    PAD = 40
+
+    # Filter out placeholder points with huge distances
+    plot_points = [p for p in points if p.distance < 1000]
+    if not plot_points:
+        return "<svg width='500' height='300'><text x='50' y='150'>No valid data points to plot.</text></svg>"
         
+    max_dist = max(abs(p.distance) for p in plot_points) if plot_points else y_limit
+
+    def scale(x, y):
+        px = PAD + (x / x_limit) * (WIDTH - 2 * PAD)
+        py = HEIGHT - PAD - (abs(y) / max_dist) * (HEIGHT - 2 * PAD)
+        return px, py
+
+    svg = [f'<svg width="{WIDTH}" height="{HEIGHT}" xmlns="http://www.w3.org/2000/svg">']
+    svg.append('<style>.small { font: italic 10px sans-serif; } .label { font: bold 12px sans-serif; }</style>')
+    # Axes
+    svg.append(f'<line x1="{PAD}" y1="{HEIGHT - PAD}" x2="{WIDTH - PAD}" y2="{HEIGHT - PAD}" stroke="black"/>')
+    svg.append(f'<line x1="{PAD}" y1="{PAD}" x2="{PAD}" y2="{HEIGHT - PAD}" stroke="black"/>')
+    svg.append(f'<text x="{WIDTH/2}" y="{HEIGHT - 5}" class="label">Multiplier</text>')
+    svg.append(f'<text x="5" y="{HEIGHT/2}" transform="rotate(-90 15,{HEIGHT/2})" class="label">Distance</text>')
+    svg.append(f'<text x="{PAD}" y="{HEIGHT - PAD + 15}" class="small">0</text>')
+    svg.append(f'<text x="{WIDTH - PAD}" y="{HEIGHT - PAD + 15}" class="small">{x_limit:.2g}</text>')
+    svg.append(f'<text x="{PAD-5}" y="{PAD}" text-anchor="end" class="small">{max_dist:.2g}</text>')
+
+    # Points
+    for p in plot_points:
+        px, py = scale(p.multiplier, p.distance)
+        color = "blue" if "integer" in p.text else "green" if "goal" in p.text else "gray"
+        svg.append(f'<circle cx="{px:.2f}" cy="{py:.2f}" r="3" fill="{color}"/>')
+
+    svg.append('</svg>')
+    return '\n'.join(svg)
+
+def rationalize_sqrt_results(radicands_input, limit=20, increment=1, goal=None, root_index=2):
+    """
+    Calculates multipliers for roots that approximate whole numbers or goal multiples,
+    and returns the results in a paginated, structured format.
+
+    This function finds multipliers (N) such that N * root(R, root_index) is close to
+    an integer or a multiple of a specified goal, where R is the radicand.
+
+    Args:
+        radicands_input (list[float] or list[str]): A list of radicand values.
+        limit (float or str, optional): The upper limit for the multiplier. Defaults to 20.
+        increment (float or str, optional): The step size for the multiplier. Defaults to 1.
+        goal (float, str or None, optional): A custom multiple to target. If None or invalid, 
+                                            it defaults to the increment value. Defaults to None.
+        root_index (int, optional): The index of the root (e.g., 2 for square root). Defaults to 2.
+
+    Returns:
+        list[dict]: A list where each dictionary represents a page of results.
+            Each dictionary has the format:
+            {
+                'page_id': str,      # e.g., 'main_result', 'honorable_mentions', 'graphic'
+                'title': str,      # A human-readable title for the page.
+                'content': str,    # The formatted content for the page.
+            }
+    """
+    # --- 1. Input Validation and Sanitization ---
+    radicands = [float(r) for r in radicands_input if is_number_tryexcept(r)]
+    if not radicands:
+        raise ValueError("radicands_input must contain at least one valid number.")
+
+    limit_val = attempt_convert_scientific_notation(limit) or 20
+    increment_val = attempt_convert_scientific_notation(increment) or 1
+    goal_val = attempt_convert_scientific_notation(goal)
+    if not isinstance(goal_val, (int, float)):
+        goal_val = increment_val
+    using_goal = not math.isclose(goal_val, 1.0)
+
+    # --- 2. Initialization ---
+    MAX_MENTIONS = 10
+    iterations = int(limit_val / increment_val)
+    
+    # Use a dynamic distance limit for goal-seeking, starting at 10% of the goal value
+    goal_distance_limit = goal_val / 10
+    
+    best_integer_data = Data_Point([0], 10001, 0, "integer")
+    best_goal_data = Data_Point([0], 10002, 0, "goal")
+    mentions = []
+    all_points_for_graphic = []
+
+    # --- 3. Main Calculation Loop ---
+    for i in range(1, iterations + 1):
+        multiplier = increment_val * i
+        results = [multiplier * (r ** (1 / root_index)) for r in radicands]
         
+        # Check for proximity to integers (goal=1)
+        data_int = find_match(results, multiplier, 1.0, "integer", 0.1)
+        if data_int and data_int < best_integer_data:
+            best_integer_data = data_int
+            all_points_for_graphic.append(data_int)
 
+        # Check for proximity to the custom goal, if specified
+        if using_goal:
+            data_goal = find_match(results, multiplier, goal_val, "goal", goal_distance_limit)
+            if data_goal:
+                all_points_for_graphic.append(data_goal)
+                if data_goal < best_goal_data:
+                    best_goal_data = data_goal
+                    # Tighten the distance limit when a new best is found
+                    new_dist = abs(best_goal_data.distance)
+                    goal_distance_limit -= (goal_distance_limit - new_dist) / MAX_MENTIONS
+                else:
+                    store_mention(data_goal, mentions, MAX_MENTIONS)
 
+    # --- 4. Assemble Output Pages ---
+    pages = []
 
-
-#########USER INPUT
-
-advancedMode = len(sys.argv) > 1 and sys.argv[1] == "-advanced"
-
-print("\n\n======== sqrt rationalizer ========")
-print("     leave blank for default") 
-print("     This program is designed to find the multiples of a square root which create the closest result to a whole number")
-print("     The original purpose of this was to find side lengths of right triangles and other geometric shapes which approximate to workable lengths.")
-print("     √2 or √3 is the usual problem number\n\n")
-
-user_radicand_list = []
-user_radicand_list.append(input(">enter radicand: √"))
-if advancedMode:
-    i = 0
-    while True:
-        i += 1
-        extra = input(">enter extra radicand (optional): √")
-        if extra == "": 
-            break
-        user_radicand_list.append(extra)
-user_limit = input(">enter upper limit (default is 20): ") 
-user_increment = input(">enter allowed increment (default is 1): ")
-user_goal = input(">enter goal multiple (default is set to increment): ")
-user_root_index = 2 #TODO: add options for higher order roots
-
-#goal_precision = len(user_increment[user_increment.find("."):])
-
-print("\n...")
-
-num_radicands = len(user_radicand_list)
-
-for i in range(num_radicands):
-    try:
-        user_radicand_list[i] = float(user_radicand_list[i])
-    except ValueError:
-        print(f"'√{user_radicand_list[i]}' is not a valid number.")
-
-user_limit = attempt_convert_scientific_notation(user_limit)
-if not is_number_tryexcept(user_limit):
-    user_limit = 20
-user_limit = float(user_limit)
-
-user_increment = attempt_convert_scientific_notation(user_increment)
-if not is_number_tryexcept(user_increment):
-    user_increment = 1
-user_increment = float(user_increment)
-
-user_goal = attempt_convert_scientific_notation(user_goal)
-if not is_number_tryexcept(user_goal):
-    user_goal = float(user_increment)
-user_goal = float(user_goal)
-
-using_goal = user_goal != 1
-    
-    
-
-
-
-#########START OF MAIN PROCESS
-
-MAX_MENTIONS = 10
-
-iterations = int(user_limit / user_increment)
-minimum_distance = user_goal/10
-
-best_integer_data = Data_Point(0, 10000, 0, "integer")
-best_goal_data = Data_Point(0, user_goal, 0)
-mentions = [None] * 10
-
-
-#tracking completion time
-start_time = time.time()
-
-print("\n")
-
-for i in range(iterations):
-    print("\r           ", end = "")
-    
-    #current testcase
-    multiplier = user_increment * (i + 1)
-    
-    #the core math function: multiplier √(radicand)
-    #the result is stored and compared with previous results to decide if the multiplier is notably close to an integer/goal
-    results = []
-    for g in range(num_radicands):
-        results.append(multiplier * ( (user_radicand_list[g]) ** (1/user_root_index) ))
-    
-    best = False #track if it was selected for best option
-    
-    #***program always shows results for integers regardless of settings
-    #previous best integer approximate is compared with this iteration.
-    integer_data = find_match(results, multiplier, 1, "integer", abs(best_integer_data.distance))
-    #an output indicates that this iteration is closer to an integer
-    if integer_data:
-        best_integer_data = integer_data
-        best = True
-
-    #***if a custom goal or increment is set for iterating, the program will track the closest match to a multiple of that increment
+    # Page 1: Main Results
+    main_content_parts = ["--- Best Match for Integer ---", _format_result_string(best_integer_data, radicands)]
     if using_goal:
-    
-        #previous best increment approximate is compared with this iteration
-        goal_data = find_match(results, multiplier, user_goal, "goal", abs(best_goal_data.distance))
-        #an output indicates that this iteration is closer to a multiple of an increment
-        if goal_data:
-            store_mention(best_goal_data)
-            best_goal_data = goal_data
-            best = True
-    
-    #***this is the honorable mentions circuit. remembers results that aren't the best
-    if not best:
-        mention_data = find_match(results, multiplier, user_goal, "mention", minimum_distance)#redundant
-        if mention_data:
-            stored = store_mention(mention_data)
-            if stored:
-                minimum_distance = mod_minimum(mention_data)
-    
-    print(f"{int(i/iterations * 100)}% complete", end="")
-    
-print("\r           100% complete")
-print("           %ss" % (round(time.time() - start_time, 4))) #execution time
-print("\n")
-print(u'\u2500' * 100) #line
+        main_content_parts.append("\n--- Best Match for Goal ---")
+        main_content_parts.append(_format_result_string(best_goal_data, radicands))
+    pages.append({
+        'page_id': 'main_result',
+        'title': 'Main Results',
+        'content': "\n".join(main_content_parts)
+    })
 
-#########END OF MAIN PROCESS
+    # Page 2: Honorable Mentions
+    if mentions:
+        mention_content = "\n\n".join([_format_result_string(m, radicands) for m in mentions])
+        pages.append({
+            'page_id': 'honorable_mentions',
+            'title': 'Honorable Mentions',
+            'content': mention_content
+        })
 
+    # Page 3: Graphic
+    graphic_svg = _generate_svg_graphic(all_points_for_graphic, limit_val, goal_val / 10)
+    pages.append({
+        'page_id': 'graphic',
+        'title': 'Distance vs. Multiplier Plot',
+        'content': graphic_svg
+    })
 
-
-
-
-
-
-
-#########USER OUTPUT
-
-def printResults(multiplier, targets, distance):
-    if len(targets) <= 1:
-        print(f"     >>{multiplier} * √{user_radicand_list[0]}<<")
-        print(f" approximating: {targets[0]}")
-        print(f" with a distance of {distance}")
-    else:
-        print(f"     >>{multiplier} * (√{user_radicand_list[0]}", end="")
-        for i in range(1, num_radicands):
-            print(f" OR √{user_radicand_list[i]}", end="")
-        print(")<<")
-        
-        print(f" approximating: {targets[0]}", end="")
-        for i in range(1, num_radicands):
-            print(f", {targets[i]}", end="")
-        print()
-        
-        print(f" with an average distance of {distance}")
-
-print("\n the closest multiplier that approaches an integer is: ")
-printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
-
-if(using_goal):
-    print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
-    printResults(best_goal_data.multiplier, best_goal_data.approximates, abs(best_goal_data.distance))
-
-print("\n\nmentions:")
-for i in range(MAX_MENTIONS):
-    if not mentions[i]: #list ends here so leave loop
-        break
-    #custom e notation for rounding results
-    mentionV = mentions[i].distance
-    mentionE = 0
-    if mentionV != 0.0:
-        while int(mentionV) == 0.0:
-            mentionV *= 10
-            mentionE -= 1
-    mentionV = round(abs(mentionV), 5)
-    
-    print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
-
-
-#ascii
-print("\n\n")      
-print("                      ▲")
-print("                            ◣")
-print("                               ▼")
-print("")
-print("                                ◥")
-print("")
-print("                            ◤")
-print("")
-print("                        ►")
-print("                     ◂")
-print("                    ▸")
-print("                     ▵")
-print("")
-print("                         ◃")
-
-print("\n(end)\n\n")
-
+    return pages
