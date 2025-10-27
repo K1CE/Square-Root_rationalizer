@@ -101,6 +101,7 @@ def store_mention(data):
                 return True
 
 #arg registry
+advancedMode = False
 def advanced_mode():
     advancedMode = True
     
@@ -112,6 +113,10 @@ def help_mode():
 def version_mode():
     print("yuh it has a version")
     sys.exit(0)
+
+parser = optparse.OptionParser()
+
+parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode')
 
 arg_reg = {
     '--advanced' : advanced_mode,
@@ -129,6 +134,10 @@ arg_reg = {
 
 #handle args
 
+(options, args) = parser.parse_args()
+advancedMode = options.advancedMode
+
+#todo: use optparse.parseargs() instead and set advancedMode to true with store value action
 #todo: add try catch
 if len(sys.argv) > 1:
     for i in range(len(sys.argv)):
