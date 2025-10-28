@@ -114,9 +114,15 @@ def version_mode():
     print("yuh it has a version")
     sys.exit(0)
 
-parser = optparse.OptionParser()
 
-parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode')
+#########USER INPUT
+
+#handle args
+#TODO: use argparse insead
+
+parser = optparse.OptionParser(version="%prog 1.0")
+#parser = OptionParser(usage="%prog [-f] [-q]", version="%prog 1.0")
+parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode', help="Runs the app with extra options")
 
 arg_reg = {
     '--advanced' : advanced_mode,
@@ -129,10 +135,6 @@ arg_reg = {
 
 
 
-
-#########USER INPUT
-
-#handle args
 
 (options, args) = parser.parse_args()
 advancedMode = options.advancedMode
