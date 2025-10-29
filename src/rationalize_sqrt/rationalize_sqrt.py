@@ -2,6 +2,8 @@
 import sys
 import time
 import optparse
+from pathlib import Path
+
 
 
 #########CLASSES
@@ -33,6 +35,7 @@ class Data_Point():
 
 
 #########FUNCTIONS
+
 
 def is_number_tryexcept(s):
     """ Returns True if string is a number. """
