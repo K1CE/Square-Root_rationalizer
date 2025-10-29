@@ -36,6 +36,15 @@ class Data_Point():
 
 #########FUNCTIONS
 
+def version_from_toml():
+    version = "unknown"
+    pyproject_toml_file = Path(__file__).parent.parent.parent / "pyproject.toml"
+    if pyproject_toml_file.exists() and pyproject_toml_file.is_file():
+        data = pyproject_toml_file.read_text(encoding="utf-8") 
+        index = data.index('version')
+        version = data[index + 11: index + 19]
+        version = version[:version.index('"')]
+    return version
 
 def is_number_tryexcept(s):
     """ Returns True if string is a number. """
@@ -120,10 +129,13 @@ def version_mode():
 
 #########USER INPUT
 
+# adopt path to your pyproject.toml
+
+
 #handle args
 #TODO: use argparse insead
 
-parser = optparse.OptionParser(version="%prog 1.0")
+parser = optparse.OptionParser(version="%prog " + version_from_toml())
 #parser = OptionParser(usage="%prog [-f] [-q]", version="%prog 1.0")
 parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode', help="Runs the app with extra options")
 
