@@ -112,60 +112,17 @@ def store_mention(data):
                 mentions[i] = data
                 return True
 
-#arg registry
-advancedMode = False
-def advanced_mode():
-    advancedMode = True
-    
-def help_mode():
-    for key in arg_reg:
-        print(f"{key}: {arg_reg[key].__name__}")
-    sys.exit(0)
-    
-def version_mode():
-    print("yuh it has a version")
-    sys.exit(0)
-
-
 #########USER INPUT
-
-# adopt path to your pyproject.toml
-
 
 #handle args
 #TODO: use argparse insead
 
 parser = optparse.OptionParser(version="%prog " + version_from_toml())
-#parser = OptionParser(usage="%prog [-f] [-q]", version="%prog 1.0")
 parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode', help="Runs the app with extra options")
-
-arg_reg = {
-    '--advanced' : advanced_mode,
-    '-a' : advanced_mode,
-    '--help' : help_mode,
-    '-h' : help_mode,
-    '--version' : version_mode,
-    '-v' : version_mode,
-}
-
-
 
 
 (options, args) = parser.parse_args()
 advancedMode = options.advancedMode
-
-#todo: use optparse.parseargs() instead and set advancedMode to true with store value action
-#todo: add try catch
-if len(sys.argv) > 1:
-    for i in range(len(sys.argv)):
-        if sys.argv[i][:1] == '-':
-            try:
-                arg_reg[sys.argv[i]]()
-            except KeyError:
-                print(f"'{sys.argv[i]}' is not a valid option.")
-                sys.exit(0)
-                
-                    
 
 
 print("\n\n======== sqrt rationalizer ========")
