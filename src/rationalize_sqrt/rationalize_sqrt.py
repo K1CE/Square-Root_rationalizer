@@ -1,6 +1,8 @@
 #########IMPORTS
 import sys
 import time
+import optparse
+from pathlib import Path
 
 
 
@@ -33,6 +35,16 @@ class Data_Point():
 
 
 #########FUNCTIONS
+
+def version_from_toml():
+    version = "unknown"
+    pyproject_toml_file = Path(__file__).parent.parent.parent / "pyproject.toml"
+    if pyproject_toml_file.exists() and pyproject_toml_file.is_file():
+        data = pyproject_toml_file.read_text(encoding="utf-8") 
+        index = data.index('version')
+        version = data[index + 11: index + 19]
+        version = version[:version.index('"')]
+    return version
 
 def is_number_tryexcept(s):
     """ Returns True if string is a number. """
@@ -99,16 +111,19 @@ def store_mention(data):
             if abs(data.distance) < abs(mentions[i].distance):
                 mentions[i] = data
                 return True
-        
-        
-        
-
-
-
 
 #########USER INPUT
 
-advancedMode = len(sys.argv) > 1 and sys.argv[1] == "-advanced"
+#handle args
+#TODO: use argparse insead
+
+parser = optparse.OptionParser(version="%prog " + version_from_toml())
+parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode', help="Runs the app with extra options")
+
+
+(options, args) = parser.parse_args()
+advancedMode = options.advancedMode
+
 
 print("\n\n======== sqrt rationalizer ========")
 print("     leave blank for default") 
