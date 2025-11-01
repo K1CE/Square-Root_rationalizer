@@ -65,7 +65,6 @@ jobs:
             exit 1
           else
             echo "The new version $NEW_VERSION is greater than the latest version $LATEST_VERSION on PyPI."
-            sed -i "s+version = $OLD_VERSION+version = $NEW_VERSION+g" pyproject.toml
           fi
 
   setup_and_build:
