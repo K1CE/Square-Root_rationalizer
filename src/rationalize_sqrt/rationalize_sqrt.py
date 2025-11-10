@@ -2,6 +2,7 @@
 import sys
 import time
 import optparse
+import os
 from pathlib import Path
 
 
@@ -294,7 +295,6 @@ for i in range(MAX_MENTIONS):
     mentionV = round(abs(mentionV), 5)
     
     print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
-
 
 #ascii
 print("\n\n")      
