@@ -295,6 +295,18 @@ for i in range(MAX_MENTIONS):
     mentionV = round(abs(mentionV), 5)
     
     print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
+    
+#output files
+path = os.pardir
+
+#for i in range (i, 4)
+#file = open(os.path.join(os.pardir, 'log.txt'), "x")
+file_path = os.path.realpath(__file__)
+fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
+if fileIndex != -1:
+    file_path = file_path[0:fileIndex + 24]
+    f = open(os.path.join(file_path, 'output\\log.txt'), "x")
+
 
 #ascii
 print("\n\n")      
