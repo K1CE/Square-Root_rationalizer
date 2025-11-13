@@ -305,7 +305,11 @@ file_path = os.path.realpath(__file__)
 fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
 if fileIndex != -1:
     file_path = file_path[0:fileIndex + 24]
-    f = open(os.path.join(file_path, 'output\\log.txt'), "x")
+    log_iteration = 1
+    for log in os.listdir(file_path + "\\output"):
+        if log[0:3] == "log":
+            log_iteration += 1
+    f = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x")
 
 
 #ascii
