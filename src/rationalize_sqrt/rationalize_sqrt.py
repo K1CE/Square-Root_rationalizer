@@ -256,6 +256,23 @@ print(u'\u2500' * 100) #line
 
 #########USER OUTPUT
 
+#output files
+
+#for i in range (i, 4)
+#file = open(os.path.join(os.pardir, 'log.txt'), "x")
+file_path = os.path.realpath(__file__)
+fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
+output 
+if fileIndex != -1:
+    file_path = file_path[0:fileIndex + 24]
+    log_iteration = 1
+    for log in os.listdir(file_path + "\\output"):
+        if log[0:3] == "log":
+            log_iteration += 1
+    output = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x")
+    
+
+
 def printResults(multiplier, targets, distance):
     if len(targets) <= 1:
         print(f"     >>{multiplier} * √{user_radicand_list[0]}<<")
@@ -296,21 +313,6 @@ for i in range(MAX_MENTIONS):
     
     print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
     
-#output files
-path = os.pardir
-
-#for i in range (i, 4)
-#file = open(os.path.join(os.pardir, 'log.txt'), "x")
-file_path = os.path.realpath(__file__)
-fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
-if fileIndex != -1:
-    file_path = file_path[0:fileIndex + 24]
-    log_iteration = 1
-    for log in os.listdir(file_path + "\\output"):
-        if log[0:3] == "log":
-            log_iteration += 1
-    f = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x")
-
 
 #ascii
 print("\n\n")      
