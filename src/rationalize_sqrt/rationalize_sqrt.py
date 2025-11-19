@@ -262,7 +262,7 @@ print(u'\u2500' * 100) #line
 #file = open(os.path.join(os.pardir, 'log.txt'), "x")
 file_path = os.path.realpath(__file__)
 fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
-output 
+output = 0 #defined in global scope
 if fileIndex != -1:
     file_path = file_path[0:fileIndex + 24]
     log_iteration = 1
@@ -270,8 +270,9 @@ if fileIndex != -1:
         if log[0:3] == "log":
             log_iteration += 1
     output = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x")
+    output.write(f"x*sqrt({user_radicand_list[0]}), x is in set (i*{user_increment})")#replace equals sign with something better
     
-
+    #header should be the input settings
 
 def printResults(multiplier, targets, distance):
     if len(targets) <= 1:
