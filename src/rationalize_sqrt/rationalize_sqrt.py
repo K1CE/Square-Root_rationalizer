@@ -299,7 +299,6 @@ printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(b
 if outputting:
     sys.stdout = output
     printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
-    sys.stdout.close()
     sys.stdout = sys.stdout = sys.__stdout__
 
 if(using_goal):
