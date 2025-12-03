@@ -271,7 +271,7 @@ if fileIndex != -1:
         if log[0:3] == "log":
             log_iteration += 1
     output = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x", encoding='utf-8')
-    output.write(f"x*sqrt({user_radicand_list[0]}), x is in set (i*{user_increment})")#replace equals sign with something better
+    output.write(f"x*√{user_radicand_list[0]}, x ∈ i*{user_increment}\n\n")#replace equals sign with something better
     outputting = True
     
     #header should be the input settings
