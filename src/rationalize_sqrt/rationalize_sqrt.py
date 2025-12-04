@@ -258,6 +258,7 @@ print(u'\u2500' * 100) #line
 
 #output files
 
+#TODO: add range
 #for i in range (i, 4)
 #file = open(os.path.join(os.pardir, 'log.txt'), "x")
 file_path = os.path.realpath(__file__)
@@ -298,6 +299,7 @@ print("\n the closest multiplier that approaches an integer is: ")
 printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
 if outputting:
     sys.stdout = output
+    print("\n the closest multiplier that approaches an integer is: ")
     printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
     sys.stdout = sys.stdout = sys.__stdout__
 
@@ -306,11 +308,11 @@ if(using_goal):
     printResults(best_goal_data.multiplier, best_goal_data.approximates, abs(best_goal_data.distance))
     if outputting:
         sys.stdout = output
+        print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
         printResults(best_goal_data.multiplier, best_goal_data.approximates, abs(best_goal_data.distance))
         sys.stdout = sys.stdout = sys.__stdout__
         
 
-print("\n\nmentions:")
 def print_mentions():
     for i in range(MAX_MENTIONS):
         if not mentions[i]: #list ends here so leave loop
@@ -326,11 +328,12 @@ def print_mentions():
         
         print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
     
-
+print("\n\nmentions:")
 print_mentions()
 
 if outputting:
     sys.stdout = output
+    print("\n\nmentions:")
     print_mentions()
     sys.stdout = sys.stdout = sys.__stdout__
     
