@@ -6,14 +6,14 @@ import os
 from pathlib import Path
 
 
-
 #########CLASSES
 
 #simple object for storing data in groups.
 #    represents a multiplier that approximates a number when it was multiplied by a square root
 #    TODO: add the function itself to the Data_Point class?
 class Data_Point():
-
+    class_prints = []
+    
     def __init__(self, approximates, distance, multiplier, text="goal"):
         self.approximates = approximates
         self.distance = distance
@@ -25,12 +25,17 @@ class Data_Point():
         return Data_Point(data_point.approximate, data_point.distance, data_point.multiplier, data_point.text)
         
     def print(self):
-        print(f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} ", end = "")
+        print_string = f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} "
+        
+        
         for i in range(len(self.approximates)):
-            print(self.approximates[i], end = "")
+            print_string + str(self.approximates[i])
             if i < len(self.approximates) - 1:
-                print(", ", end = "")
-        print()
+                print_string + ", "
+        
+        print(print_string)
+        Data_Point.class_prints.append(print_string)
+        
 
 
 
