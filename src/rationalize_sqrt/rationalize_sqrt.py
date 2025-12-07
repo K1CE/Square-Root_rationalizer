@@ -340,7 +340,10 @@ print_mentions()
 if outputting:
     sys.stdout = output
     print("\n\nmentions:")
-    print_mentions()
+    
+    for printing in Data_Point.class_prints:
+        print(printing)
+    #print_mentions()
     sys.stdout = sys.stdout = sys.__stdout__
     
 
