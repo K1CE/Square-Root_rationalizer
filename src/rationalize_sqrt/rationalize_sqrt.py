@@ -2,8 +2,8 @@
 import sys
 import time
 import optparse
+import os
 from pathlib import Path
-
 
 
 #########CLASSES
@@ -12,7 +12,8 @@ from pathlib import Path
 #    represents a multiplier that approximates a number when it was multiplied by a square root
 #    TODO: add the function itself to the Data_Point class?
 class Data_Point():
-
+    class_prints = []
+    
     def __init__(self, approximates, distance, multiplier, text="goal"):
         self.approximates = approximates
         self.distance = distance
@@ -24,12 +25,17 @@ class Data_Point():
         return Data_Point(data_point.approximate, data_point.distance, data_point.multiplier, data_point.text)
         
     def print(self):
-        print(f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} ", end = "")
+        print_string = f"multiplier {self.multiplier} with distance {abs(self.distance)} to {self.text} "
+        
+        
         for i in range(len(self.approximates)):
-            print(self.approximates[i], end = "")
+            print_string + str(self.approximates[i])
             if i < len(self.approximates) - 1:
-                print(", ", end = "")
-        print()
+                print_string + ", "
+        
+        print(print_string)
+        Data_Point.class_prints.append(print_string)
+        
 
 
 
@@ -255,6 +261,28 @@ print(u'\u2500' * 100) #line
 
 #########USER OUTPUT
 
+#output files
+
+#TODO: add range
+#for i in range (i, 4)
+#file = open(os.path.join(os.pardir, 'log.txt'), "x")
+file_path = os.path.realpath(__file__)
+fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
+output = 0 #defined in global scope
+outputting = False
+if fileIndex != -1:
+    file_path = file_path[0:fileIndex + 24]
+    log_iteration = 1
+    for log in os.listdir(file_path + "\\output"):
+        if log[0:3] == "log":
+            log_iteration += 1
+    output = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x", encoding='utf-8')
+    output.write(f"x*√{user_radicand_list[0]}, x ∈ i*{user_increment}, [0, {user_limit}]\n\n")#replace equals sign with something better
+    output.write(u'\u2500' * 30) #line
+    outputting = True
+    
+    #header should be the input settings
+
 def printResults(multiplier, targets, distance):
     if len(targets) <= 1:
         print(f"     >>{multiplier} * √{user_radicand_list[0]}<<")
@@ -275,26 +303,49 @@ def printResults(multiplier, targets, distance):
 
 print("\n the closest multiplier that approaches an integer is: ")
 printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
+if outputting:
+    sys.stdout = output
+    print("\n the closest multiplier that approaches an integer is: ")
+    printResults(best_integer_data.multiplier, best_integer_data.approximates, abs(best_integer_data.distance))
+    sys.stdout = sys.stdout = sys.__stdout__
 
 if(using_goal):
     print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
     printResults(best_goal_data.multiplier, best_goal_data.approximates, abs(best_goal_data.distance))
+    if outputting:
+        sys.stdout = output
+        print(f"\n the closest multiplier that approaches a multiple of {user_goal}")
+        printResults(best_goal_data.multiplier, best_goal_data.approximates, abs(best_goal_data.distance))
+        sys.stdout = sys.stdout = sys.__stdout__
+        
 
-print("\n\nmentions:")
-for i in range(MAX_MENTIONS):
-    if not mentions[i]: #list ends here so leave loop
-        break
-    #custom e notation for rounding results
-    mentionV = mentions[i].distance
-    mentionE = 0
-    if mentionV != 0.0:
-        while int(mentionV) == 0.0:
-            mentionV *= 10
-            mentionE -= 1
-    mentionV = round(abs(mentionV), 5)
+def print_mentions():
+    for i in range(MAX_MENTIONS):
+        if not mentions[i]: #list ends here so leave loop
+            break
+        #custom e notation for rounding results
+        mentionV = mentions[i].distance
+        mentionE = 0
+        if mentionV != 0.0:
+            while int(mentionV) == 0.0:
+                mentionV *= 10
+                mentionE -= 1
+        mentionV = round(abs(mentionV), 5)
+        
+        print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
     
-    print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
+print("\n\nmentions:")
+print_mentions()
 
+if outputting:
+    sys.stdout = output
+    print("\n\nmentions:")
+    
+    for printing in Data_Point.class_prints:
+        print(printing)
+    #print_mentions()
+    sys.stdout = sys.stdout = sys.__stdout__
+    
 
 #ascii
 print("\n\n")      
