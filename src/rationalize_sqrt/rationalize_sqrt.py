@@ -261,6 +261,7 @@ print(u'\u2500' * 100) #line
 
 #########USER OUTPUT
 
+
 #output files
 
 #TODO: add range
@@ -319,6 +320,10 @@ if(using_goal):
         sys.stdout = sys.stdout = sys.__stdout__
         
 
+print("\npress enter to continue . . .", end = "")
+input()
+print('\033[1A', '\033[K', end='')
+
 def print_mentions():
     for i in range(MAX_MENTIONS):
         if not mentions[i]: #list ends here so leave loop
@@ -334,7 +339,7 @@ def print_mentions():
         
         print(f"{mentions[i].multiplier}({mentionV}e{mentionE})")
     
-print("\n\nmentions:")
+print("\nmentions:")
 print_mentions()
 
 if outputting:
