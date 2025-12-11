@@ -121,7 +121,7 @@ def store_mention(data):
 #########USER INPUT
 
 #handle args
-#TODO: use argparse insead
+#TODO: version isn't right
 
 parser = optparse.OptionParser(version="%prog " + version_from_toml())
 parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode', help="Runs the app with extra options")
@@ -264,11 +264,8 @@ print(u'\u2500' * 100) #line
 
 #output files
 
-#TODO: add range
-#for i in range (i, 4)
-#file = open(os.path.join(os.pardir, 'log.txt'), "x")
 file_path = os.path.realpath(__file__)
-fileIndex = file_path.find("Square Root Rationalizer") #TODO: replace with const/var
+fileIndex = file_path.find("Square Root Rationalizer")
 output = 0 #defined in global scope
 outputting = False
 if fileIndex != -1:
@@ -278,11 +275,9 @@ if fileIndex != -1:
         if log[0:3] == "log":
             log_iteration += 1
     output = open(os.path.join(file_path, f"output\\log-{log_iteration}.txt"), "x", encoding='utf-8')
-    output.write(f"x*√{user_radicand_list[0]}, x ∈ i*{user_increment}, [0, {user_limit}]\n\n")#replace equals sign with something better
+    output.write(f"x*√{user_radicand_list[0]}, x ∈ i*{user_increment}, [0, {user_limit}]\n\n")
     output.write(u'\u2500' * 30) #line
     outputting = True
-    
-    #header should be the input settings
 
 def printResults(multiplier, targets, distance):
     if len(targets) <= 1:
@@ -348,7 +343,6 @@ if outputting:
     
     for printing in Data_Point.class_prints:
         print(printing)
-    #print_mentions()
     sys.stdout = sys.stdout = sys.__stdout__
     
 
