@@ -6,6 +6,7 @@
   [![python version](https://img.shields.io/pypi/pyversions/rationalize-sqrt)](https://www.python.org/)
   [![issues](https://img.shields.io/github/issues-raw/K1CE/Square-Root_rationalizer)](https://github.com/K1CE/Square-Root_rationalizer/issues)
   [![GitHub License](https://img.shields.io/github/license/K1CE/Square-Root_rationalizer)](https://github.com/K1CE/Square-Root_rationalizer/blob/main/LICENSE.md)
+ ![Repo Stars](https://img.shields.io/github/stars/K1CE/Square-Root_rationalizer)
 </div>
 
 # △
