@@ -125,7 +125,7 @@ def store_mention(data):
 
 parser = optparse.OptionParser(version="%prog " + version_from_toml())
 parser.add_option('-a', '--advanced', action='store_true', dest='advancedMode', help="Runs the app with extra options")
-
+parser.add_option('--no_log', action='store_true', dest='logFlag', help="Only show best output")
 
 (options, args) = parser.parse_args()
 advancedMode = options.advancedMode
