@@ -127,10 +127,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Checkout code
+        # Use a specific version of checkout action, e.g., v4
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch full history to avoid issues with tags and branches
+          # This token is required to allow the action to push changes
+          token: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
