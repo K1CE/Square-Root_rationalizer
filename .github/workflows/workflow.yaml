@@ -133,6 +133,7 @@ jobs:
         with:
           # This token is required to allow the action to push changes
           token: ${{ secrets.GITHUB_TOKEN }} 
+          ref: main # Explicitly check out the 'main' branch
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
