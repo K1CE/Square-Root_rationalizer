@@ -142,11 +142,13 @@ jobs:
           path: dist/
       - name: Commit new version and push changes
       
-        # This action handles committing modified pyproject.toml and poetry.lock files
-        uses: EndBug/add-and-commit@v9
+      - name: Update YAML file
+        uses: fjogeleit/yaml-update-action@main
         with:
-          default_author: github_actions
-          message: "Poetry version update"
+          valueFile: 'config.yaml'
+          propertyPath: 'version'
+          value: ${GITHUB_REF#refs/tags/}
+          commitChange: true
           
       - name: Create GitHub Release
         id: create_release
