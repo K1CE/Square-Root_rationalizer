@@ -140,8 +140,7 @@ jobs:
         with:
           name: dist
           path: dist/
-      - name: Commit new version and push changes
-      
+          
       - name: Update YAML file
         uses: fjogeleit/yaml-update-action@main
         with:
