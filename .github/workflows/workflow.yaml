@@ -140,15 +140,20 @@ jobs:
         with:
           name: dist
           path: dist/
-          
-      - name: Update YAML file
-        uses: fjogeleit/yaml-update-action@main
-        with:
-          valueFile: 'config.yaml'
-          propertyPath: 'version'
-          value: ${GITHUB_REF#refs/tags/}
-          commitChange: true
-          
+                
+      - name: Update Version Number
+        run: |
+          OLD_VERSION=$(grep ^version pyproject.toml | cut -d '"' -f 2)
+          OLD_VERSION="\"$OLD_VERSION\""
+          NEW_VERSION="\"${GITHUB_REF#refs/tags/}\""
+          sed -i "s+version = $OLD_VERSION+version = $NEW_VERSION+g" pyproject.toml
+      - name: Commit Changes
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git commit -a -m "Update version number to new_version"
+          git push origin HEAD:main
+                
       - name: Create GitHub Release
         id: create_release
         env:
