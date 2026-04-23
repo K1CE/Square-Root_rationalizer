@@ -56,6 +56,20 @@ the equation then quietly resolves to 7
 
 Finally, we can fill the gap left by the odd geometry with a rectangle that's exactly 65 units in length.
 
+## Interpreting The Output
+you will be given a log of what the program finds:<br/>
+"`multiplier 5.5 with distance 0.026279441628824785 to goal`"<br/>
+each line represents a notable data point that falls under the average accuracy to either an integer or set increment<br/>
+
+"integer" means the data point was close to an integer number when multiplied by the root<br/>
+"goal" means the data point was close to a set increment.<br/>
+"mention" means the data point was close enough to be remembered and listed in the final mentions list presented at the end.<br/>
+
+Then youre presented with the best results.<br/>
+You are given one for the best result for approaching an integer, and one that approaches a goal increment.<br/>
+
+After pressing enter you are met with the 'mentions' list which stores all the honorable mentions from what the software has found. These are the top 10 other values that may be suitable alternatives for what you're working with.<br/>
+
 ---
 ## Installation
 1. Install [Python 3.14](https://www.python.org/downloads/)
